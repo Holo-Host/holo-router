@@ -27,4 +27,5 @@ buildRustPackage rustPlatform {
   name = "holo-router-gateway";
   src = gitignoreSource ./.;
   cargoDir = ".";
+  meta.platforms = [ "x86_64-linux" ];
 }
