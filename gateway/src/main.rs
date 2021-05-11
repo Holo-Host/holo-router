@@ -88,7 +88,7 @@ async fn splice_by_sni(mut inbound: TcpStream) -> Fallible<()> {
         ServerNamePayload::Unknown(_) => bail!("SNI payload uses unknown format"),
     };
 
-    debug!("Hostname: {}", hostname);
+    info!("Hostname: {}", hostname);
 
     if !hostname.ends_with(".holohost.net") {
         bail!("Hostname is not *.holohost.net");
@@ -114,7 +114,7 @@ async fn main() -> Fallible<()> {
         let (inbound, inbound_addr) = listener.accept().await?;
 
         let request = async move {
-            info!("Inbound IP address: {}", inbound_addr.ip());
+            debug!("Inbound IP address: {}", inbound_addr.ip());
 
             if let Err(e) = splice_by_sni(inbound).in_current_span().await {
                 warn!("{}", e);
