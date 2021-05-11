@@ -9,8 +9,8 @@ in
 {
   holo-router-agent = buildRustPackage rustPlatform {
     name = "holo-router-agent";
-    src = gitignoreSource ./agent;
-    cargoDir = ".";
+    src = gitignoreSource ./.;
+    cargoDir = "./agent";
 
     nativeBuildInputs = [ pkgconfig ];
     buildInputs = [ openssl ];
@@ -18,5 +18,11 @@ in
     meta.platforms = lib.platforms.linux;
   };
 
-  holo-router-gateway = callPackage ./gateway {};
+  holo-router-gateway = buildRustPackage rustPlatform {
+    name = "holo-router-gateway";
+    src = gitignoreSource ./.;
+    cargoDir = "./gateway";
+
+    meta.platforms = lib.platforms.linux;
+  };
 }

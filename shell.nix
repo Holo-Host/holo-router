@@ -3,9 +3,11 @@
 with pkgs;
 
 mkShell {
-  inputsFrom = with import ./. { inherit pkgs; }; [
-    holo-router-agent
-  ];
+  inputsFrom = lib.attrValues (import ./. { inherit pkgs; });
 
-  buildInputs = [ nodejs python wrangler ];
+  buildInputs = [
+    nodejs
+    python
+    wrangler
+  ];
 }
