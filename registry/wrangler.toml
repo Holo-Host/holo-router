@@ -1,13 +1,21 @@
-name = "holo-router-registry"
-type = "webpack"
+# wrangler.toml
+
+# The name of your Workers application
+name = "devnet-router-registry"
 account_id = "18ff2b4e6205b938652998cfca0d8cff"
+type = "webpack"
 zone_id = "35f34e8f9d04ef8c87283ea9fb812989"
+route = "devnet-router-registry.holo.host/*"
+
+kv-namespaces = [
+    { binding = "AGENT_ID_TO_IPV4", id = "58d68c75ce954432a3a1afdaeca31d1d" },
+    { binding = "SETTINGS", id = "5f8625deb1bc4e98977a80df40888edb" },
+]
+
+[env.mainnet]
+name = "mainnet-router-registry"
 route = "router-registry.holo.host/*"
-
-[[kv-namespaces]]
-binding = "AGENT_ID_TO_IPV4"
-id = "e3de244cdc5241ce8b68096a3fab78ff"
-
-[[kv-namespaces]]
-binding = "SETTINGS"
-id = "7ac3842e281a4202a6f8279d0c54435e"
+kv-namespaces = [
+    { binding = "AGENT_ID_TO_IPV4", id = "e3de244cdc5241ce8b68096a3fab78ff" },
+    { binding = "SETTINGS", id = "7ac3842e281a4202a6f8279d0c54435e" },
+]
