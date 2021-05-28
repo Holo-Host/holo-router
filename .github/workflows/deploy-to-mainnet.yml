@@ -18,4 +18,5 @@ jobs:
         uses: cloudflare/wrangler-action@1.1.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
-          environment: mainnet # Doesn't look like Github actions accepts if statement with top level environment
+          workingDirectory: 'registry'
+          environment: mainnet
