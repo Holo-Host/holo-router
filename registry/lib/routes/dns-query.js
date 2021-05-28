@@ -3,20 +3,18 @@ import * as dnsPacket from 'dns-packet'
 
 const dnsQuery = async question => {
   if (question.class == 'IN' && question.type == 'A') {
-    const [hcid, domain, tld] = question.name.toLowerCase().split('.').slice(-3)
+    const hcid = question.name.toLowerCase().split('.').slice(-3)[0]
 
-    if (domain == 'holohost' && tld == 'net') {
-      const ipv4 = await AGENT_ID_TO_IPV4.get(hcid)
+    const ipv4 = await AGENT_ID_TO_IPV4.get(hcid)
 
-      if (ipv4 != null) {
-        return [{
-          class: 'IN',
-          data: ipv4,
-          name: question.name,
-          ttl: 10, // 10 seconds
-          type: 'A'
-        }]
-      }
+    if (ipv4 != null) {
+      return [{
+        class: 'IN',
+        data: ipv4,
+        name: question.name,
+        ttl: 10, // 10 seconds
+        type: 'A'
+      }]
     }
   }
 }
