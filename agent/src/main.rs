@@ -61,6 +61,7 @@ fn main() -> Fallible<()> {
 
     println!("holochain_public_key: {}", hc_string);
     println!("zerotier_address: {}", zt_string);
+    println!("registry_url: {}", registry_url);
 
     let payload = Payload {
         instant: SystemTime::now(),
