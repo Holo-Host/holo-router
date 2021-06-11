@@ -87,7 +87,7 @@ fn main() -> Fallible<()> {
     );
 
     Client::new()
-        .post(&registry_url)
+        .post(&format!("{}{}", &registry_url, "/v1/update"))
         .headers(headers)
         .body(payload_bytes)
         .send()?;
