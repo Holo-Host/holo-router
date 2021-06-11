@@ -56,6 +56,9 @@ fn main() -> Fallible<()> {
     let zerotier_address = zerotier_identity.address.clone();
     let zerotier_keypair: Keypair = zerotier_identity.try_into()?;
 
+    println!('holochain_agent_id: {}', holochain_agent_id);
+    println!('zerotier_address: {}', zerotier_address);
+
     let payload = Payload {
         instant: SystemTime::now(),
         holochain_agent_id: holochain_public_key,
