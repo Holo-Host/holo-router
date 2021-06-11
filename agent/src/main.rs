@@ -57,7 +57,7 @@ fn main() -> Fallible<()> {
     let zerotier_keypair: Keypair = zerotier_identity.try_into()?;
 
     let zt_string = serde_json::to_string(&zerotier_address)?;
-    let hc_string = serde_json::to_string(&holochain_public_key)?;
+    let hc_string = public_key::to_base36_id(&holochain_public_key);
 
     println!("holochain_public_key: {}", hc_string);
     println!("zerotier_address: {}", zt_string);
