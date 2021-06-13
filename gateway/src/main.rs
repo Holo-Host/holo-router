@@ -1,5 +1,6 @@
 use failure::*;
 use futures::future;
+use std::env;
 use tokio::net::{TcpListener, TcpStream};
 use tracing::*;
 use tracing_futures::*;
@@ -90,8 +91,13 @@ async fn splice_by_sni(mut inbound: TcpStream) -> Fallible<()> {
 
     info!("Hostname: {}", hostname);
 
-    if !hostname.ends_with(".holohost.net") {
-        bail!("Hostname is not *.holohost.net");
+    let holoport_domain = match env::var("HOLOPORT_DOMAIN") {
+      Ok(x) => format!(".{}", x),
+      Err(_) => bail!("HOLOPORT_DOMAIN env var not set"),
+    };
+
+    if !hostname.ends_with(&holoport_domain) {
+        bail!("Hostname is not *{}", &holoport_domain);
     }
 
     let outbound_addr = format!("{}:443", hostname);
