@@ -11,7 +11,7 @@ struct VerifyPayloadInput {
     holochain_public_key: String,
     holochain_signature: String,
     zerotier_public_key: String,
-    zerotier_signature: String
+    zerotier_signature: String,
 }
 
 fn verify_input_inner(input: VerifyPayloadInput) -> Result<(), Error> {
@@ -28,7 +28,9 @@ fn verify_input_inner(input: VerifyPayloadInput) -> Result<(), Error> {
     let payload_bytes = input.payload.as_bytes();
 
     holochain_public_key.verify(payload_bytes, &holochain_signature)?;
-    zerotier_public_key.ed.verify(payload_bytes, &zerotier_signature)?;
+    zerotier_public_key
+        .ed
+        .verify(payload_bytes, &zerotier_signature)?;
 
     Ok(())
 }
@@ -37,6 +39,6 @@ fn verify_input_inner(input: VerifyPayloadInput) -> Result<(), Error> {
 pub fn verify_input(input: JsValue) -> bool {
     match verify_input_inner(input.into_serde().unwrap()) {
         Ok(()) => true,
-        Err(_) => false
+        Err(_) => false,
     }
 }

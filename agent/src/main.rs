@@ -1,6 +1,6 @@
 use ed25519_dalek::*;
 use failure::*;
-use hpos_config_core::{Config, public_key};
+use hpos_config_core::{public_key, Config};
 use reqwest::header::{HeaderMap, HeaderName, HeaderValue};
 use reqwest::Client;
 use serde::*;
@@ -40,6 +40,7 @@ struct Payload {
 
 fn main() -> Fallible<()> {
     let config_path = env::var("HPOS_CONFIG_PATH")?;
+    let registry_url = env::var("ROUTER_REGISTRY_URL")?;
     let config_json = fs::read(config_path)?;
     let Config::V1 { seed, .. } = serde_json::from_slice(&config_json)?;
 
@@ -47,7 +48,7 @@ fn main() -> Fallible<()> {
     let holochain_public_key = PublicKey::from(&holochain_secret_key);
     let holochain_keypair = Keypair {
         public: holochain_public_key,
-        secret: holochain_secret_key
+        secret: holochain_secret_key,
     };
 
     let zerotier_identity =
@@ -79,7 +80,7 @@ fn main() -> Fallible<()> {
     );
 
     Client::new()
-        .post("https://router-registry.holo.host/v1/update")
+        .post(&format!("{}{}", &registry_url, "/v1/update"))
         .headers(headers)
         .body(payload_bytes)
         .send()?;
