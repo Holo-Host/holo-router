@@ -1,19 +1,19 @@
 [package]
 name = "holo-router-registry"
 edition = "2018"
-version = "0.0.0"
+version = "0.0.1"
 
 [dependencies]
 base64 = "0.10"
-ed25519-dalek = { version = "1.0.0-pre.1", features = ["nightly", "serde"] }
+ed25519-dalek = { version = "1.0.1", features = ["serde"] }
 failure = "0.1.5"
 serde = { version = "1.0.89", features = ["derive"] }
 wasm-bindgen = { version = "0.2.51", features = ["serde-serialize"] }
 wasm-bindgen-cli = "0.2.51"
 
 [dependencies.zerotier]
-git = "https://github.com/transumption-unstable/zerotier"
-branch = "2019-12-18-nix"
+git = "https://github.com/zo-el/zerotier-rs"
+branch = "develop"
 
 [lib]
 crate-type = ["cdylib", "rlib"]
