@@ -15,9 +15,7 @@ fn serialize_holochain_agent_id<S>(public_key: &PublicKey, serializer: S) -> Res
 where
     S: Serializer,
 {
-    serializer.serialize_str(&public_key::holochain_pub_key_encoding(
-        &public_key.to_bytes(),
-    ))
+    serializer.serialize_str(&public_key::to_base36_id(&public_key))
 }
 
 fn serialize_instant<S>(time: &SystemTime, serializer: S) -> Result<S::Ok, S::Error>
