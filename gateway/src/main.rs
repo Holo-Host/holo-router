@@ -3,7 +3,6 @@ use futures::future;
 use std::env;
 use tokio::net::{TcpListener, TcpStream};
 use tracing::*;
-use tracing_futures::*;
 use tracing_subscriber::{EnvFilter, FmtSubscriber};
 use uuid::Uuid;
 
@@ -92,8 +91,8 @@ async fn splice_by_sni(mut inbound: TcpStream) -> Fallible<()> {
     info!("Hostname: {}", hostname);
 
     let holoport_domain = match env::var("HOLOPORT_DOMAIN") {
-      Ok(x) => format!(".{}", x),
-      Err(_) => bail!("HOLOPORT_DOMAIN env var not set"),
+        Ok(x) => format!(".{}", x),
+        Err(_) => bail!("HOLOPORT_DOMAIN env var not set"),
     };
 
     if !hostname.ends_with(&holoport_domain) {
